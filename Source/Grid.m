@@ -1,5 +1,5 @@
 //
-//  Grid.m
+//  Grid.m  Weili
 //  weiligame
 //
 //  Created by Olivia Li on 4/13/15.
