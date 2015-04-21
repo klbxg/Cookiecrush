@@ -12,11 +12,13 @@
 
 - (instancetype)initCreature:(int)type {
     // since we made Creature inherit from CCSprite, 'super' below refers to CCSprite
+//    self = [super initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", type]];
+    self = [super init];
     
-    self = [super initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", type]];
-//    if (self) {
-//        self.isAlive = NO;
-//    }
+    if (self) {
+        self.sprite = [[CCSprite alloc] init];
+        [self addChild:self.sprite];
+    }
     
     return self;
 }

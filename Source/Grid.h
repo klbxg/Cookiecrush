@@ -7,6 +7,8 @@
 //
 
 #import "CCSprite.h"
+#import "Creature.h"
+#import "Swap.h"
 
 @interface Grid : CCSprite
 @property (nonatomic, assign) int totalAlive;
@@ -14,4 +16,12 @@
 @property (assign, nonatomic) NSInteger swipeFromColumn;
 @property (assign, nonatomic) NSInteger swipeFromRow;
 @property (strong, nonatomic) NSSet *possibleSwaps;
+@property (strong, nonatomic) CCSprite *selectionSprite;
+@property (assign, nonatomic) Creature *cookie1;
+@property (assign, nonatomic) Creature *cookie2;
+@property (strong, nonatomic) CCAction *fallingCookieSound;
+@property (strong, nonatomic) CCAction *addCookieSound;
+@property (copy, nonatomic) void (^swipeHandler)(Swap *swap);
+//- (void) showSelectionIndicatorForCookie:(Creature *)cookie;
+- (NSSet *)shuffle;
 @end

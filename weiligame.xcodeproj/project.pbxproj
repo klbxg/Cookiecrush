@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B121030197484FA004C1E1D /* weiligameActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* weiligameActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
-		6F3F72391ADC6F1700BFF5CD /* Pauselayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72381ADC6F1700BFF5CD /* Pauselayer.m */; };
+		6F21C1421ADE052500BC839D /* Pauselayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F21C1411ADE052500BC839D /* Pauselayer.m */; };
 		6F3F723E1ADC829A00BFF5CD /* Cookie.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F723D1ADC829A00BFF5CD /* Cookie.m */; };
 		6F3F72411ADD5FCB00BFF5CD /* Swap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72401ADD5FCB00BFF5CD /* Swap.m */; };
 		6F3F72441ADD94A300BFF5CD /* Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72431ADD94A300BFF5CD /* Chain.m */; };
@@ -167,8 +167,8 @@
 		5B121033197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Android/Info.plist; sourceTree = "<group>"; };
 		5B121034197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/iOS/Info.plist; sourceTree = "<group>"; };
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
-		6F3F72371ADC6F1700BFF5CD /* Pauselayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pauselayer.h; path = Source/Pauselayer.h; sourceTree = "<group>"; };
-		6F3F72381ADC6F1700BFF5CD /* Pauselayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pauselayer.m; path = Source/Pauselayer.m; sourceTree = "<group>"; };
+		6F21C1401ADE052500BC839D /* Pauselayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pauselayer.h; path = Source/Pauselayer.h; sourceTree = "<group>"; };
+		6F21C1411ADE052500BC839D /* Pauselayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pauselayer.m; path = Source/Pauselayer.m; sourceTree = "<group>"; };
 		6F3F723C1ADC829A00BFF5CD /* Cookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cookie.h; path = Source/Cookie.h; sourceTree = "<group>"; };
 		6F3F723D1ADC829A00BFF5CD /* Cookie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cookie.m; path = Source/Cookie.m; sourceTree = "<group>"; };
 		6F3F723F1ADD5FCB00BFF5CD /* Swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Swap.h; path = Source/Swap.h; sourceTree = "<group>"; };
@@ -460,6 +460,8 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				6F21C1401ADE052500BC839D /* Pauselayer.h */,
+				6F21C1411ADE052500BC839D /* Pauselayer.m */,
 				6F6AC6191ADC2946000B5690 /* Grid.h */,
 				6F6AC61A1ADC2946000B5690 /* Grid.m */,
 				6F3F72421ADD94A300BFF5CD /* Chain.h */,
@@ -474,8 +476,6 @@
 				6F3F723D1ADC829A00BFF5CD /* Cookie.m */,
 				6FB9E2AA1ADB59DE0058DC4D /* Gameplay2.h */,
 				6FB9E2AB1ADB59DE0058DC4D /* Gameplay2.m */,
-				6F3F72371ADC6F1700BFF5CD /* Pauselayer.h */,
-				6F3F72381ADC6F1700BFF5CD /* Pauselayer.m */,
 				6F6AC6131ADC28F5000B5690 /* Creature.h */,
 				6F6AC6141ADC28F5000B5690 /* Creature.m */,
 				7A40362019DDEF0D007B6E8F /* Platforms */,
@@ -856,11 +856,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F21C1421ADE052500BC839D /* Pauselayer.m in Sources */,
 				6F3F72411ADD5FCB00BFF5CD /* Swap.m in Sources */,
 				6F3F723E1ADC829A00BFF5CD /* Cookie.m in Sources */,
 				B73789871807631A0076A88C /* main.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
-				6F3F72391ADC6F1700BFF5CD /* Pauselayer.m in Sources */,
 				6F6AC6151ADC28F5000B5690 /* Creature.m in Sources */,
 				6F6AC61B1ADC2946000B5690 /* Grid.m in Sources */,
 				6FB9E2A91ADB4F4C0058DC4D /* Gameplay.m in Sources */,

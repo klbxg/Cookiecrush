@@ -12,12 +12,14 @@
 @implementation Pauselayer
 - (void) Continue
 {
-    [[Gameplay2 currentGameScene] pressedContinue];
+    //[[Gameplay2 currentGameScene] pressedContinue];
+    CCScene *gameplayScene = Gameplay2.currentGameScene;
+    [[CCDirector sharedDirector] replaceScene:gameplayScene];
+
 }
 
-- (void) GiveUp
+- (void) giveup
 {
-    [[Gameplay2 currentGameScene] pressedGiveUp];
-}
+    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];}
 
 @end

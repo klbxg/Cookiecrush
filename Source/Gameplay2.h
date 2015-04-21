@@ -11,7 +11,7 @@
 
 @interface Gameplay2 : CCNode
 {
-    CCNode* _pausedLayer;
+    CCNode* _pauselayer;
     long _frame;
 }
 + (Gameplay2*) currentGameScene;
