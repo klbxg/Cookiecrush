@@ -585,36 +585,42 @@ static const int GRID_ROWS = 9;
             
             // Create a new sprite for the cookie.
             //CCSprite *sprite = [SKSpriteNode spriteNodeWithImageNamed:[cookie spriteName]];
-            int newCookieType = arc4random_uniform(6);
+            //int newCookieType = arc4random_uniform(6);
             //Creature *sprite = [super initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", newCookieType]];
-            CCSprite * sprite = [[CCSprite alloc] initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", newCookieType]];
+            //CCSprite * sprite = [[CCSprite alloc] initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", newCookieType]];
             //Creature * sprite = [[Creature alloc] initCreature:newCookieType];
             //sprite.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)cookie.cookieType]];
             //cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)newCookieType]];
             //[self addSpritesForCookies:];
-            sprite.position = [self pointForColumn:cookie.column row:startRow];
+            //sprite.position = [self pointForColumn:cookie.column row:startRow];
             CCLOG(@"animation %ld, %ld", cookie.column, (long)startRow);
-            [sprite setUserInteractionEnabled:YES];
-            cookie.sprite = sprite;
-            [self addChild:sprite];
+            cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", cookie.cookieType]];
+            CGPoint oldPosition = [self pointForColumn:cookie.column row:startRow];
+            CGPoint cookiePos = [self pointForColumn:cookie.column row:cookie.row];
+            CGPoint oldPositionDifference = CGPointMake(oldPosition.x - cookiePos.x,  oldPosition.y - cookiePos.y);
+            [cookie.sprite setPosition: oldPositionDifference];
+            [self addChild:cookie];
             
             NSTimeInterval delay = 0.1 + 0.2*([array count] - idx - 1);
-//            CCLOG(@"delay %f", delay);
+            //            CCLOG(@"delay %f", delay);
             NSTimeInterval duration = (startRow - cookie.row) * 0.1;
-//            CCLOG(@"startRow %ld, %d", (long)startRow, (int)cookie.row);
+            //            CCLOG(@"startRow %ld, %d", (long)startRow, (int)cookie.row);
             longestDuration = MAX(longestDuration, (duration + delay));
-            CGPoint newPosition = [self pointForColumn:cookie.column row:cookie.row];
-            CCLOG(@"newPostion %ld, %d", (long)cookie.column, (int)cookie.row);
-            CCActionMoveTo *moveAction = [CCActionMoveTo actionWithDuration: duration position:newPosition];
-            cookie.sprite.opacity = 0;
-            id fadeInAction = [CCActionSpawn actionOne:[CCActionFadeIn actionWithDuration:0.05] two:moveAction];
-            id delayAniamtion = [CCActionDelay actionWithDuration:delay];
-            [cookie.sprite runAction:[CCActionSequence actions:delayAniamtion,fadeInAction,nil]];
-//                                                          [CCActionSequence actionWithArray:@[
- //                                                                                             [CCActionFadeIn actionWithDuration:0.05], moveAction]]]]]; //self.addCookieSound]]]]];
+            //CGPoint newPosition = [self pointForColumn:cookie.column row:cookie.row];
+            CGPoint newPosition = CGPointMake(0.0, 0.0);
+            //[cookie.sprite setPosition:newPosition];
+            
+             CCLOG(@"newPostion %ld, %d", (long)cookie.column, (int)cookie.row);
+             CCActionMoveTo *moveAction = [CCActionMoveTo actionWithDuration: duration position:newPosition];
+             cookie.sprite.opacity = 0;
+             id fadeInAction = [CCActionSpawn actionOne:[CCActionFadeIn actionWithDuration:0.05] two:moveAction];
+             id delayAniamtion = [CCActionDelay actionWithDuration:delay];
+             [cookie.sprite runAction:[CCActionSequence actions:delayAniamtion,fadeInAction,nil]];
+             //                                                          [CCActionSequence actionWithArray:@[
+             //                                                                                             [CCActionFadeIn actionWithDuration:0.05], moveAction]]]]]; //self.addCookieSound]]]]];
+             
         }];
     }
-    
     // Wait until the animations are done before we continue.
     [self runAction:[CCActionSequence actionWithArray:@[
                                          [CCActionDelay actionWithDuration:longestDuration],
