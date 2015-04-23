@@ -8,8 +8,11 @@
 
 #import "CCNode.h"
 
+@class Grid;
+
 @interface Gameplay : CCNode
 
+@property Grid* grid;
 @property(assign, nonatomic) CCLabelTTF *_targetLabel;
 @property(assign, nonatomic) CCLabelTTF *_moveLabel;
 @property(assign, nonatomic) CCLabelTTF *_scoreLabel;

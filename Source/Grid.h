@@ -24,7 +24,6 @@
 @property (assign, nonatomic) NSInteger swipeFromRow;
 @property (strong, nonatomic) NSSet *possibleSwaps;
 @property (strong, nonatomic) CCSprite *selectionSprite;
-@property (strong, nonatomic) Gameplay *gameplay;
 @property (assign, nonatomic) Creature *cookie1;
 @property (assign, nonatomic) Creature *cookie2;
 @property (strong, nonatomic) CCAction *fallingCookieSound;

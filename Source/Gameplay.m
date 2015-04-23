@@ -7,10 +7,16 @@
 //
 
 #import "Gameplay.h"
+#import "Grid.h"
 
-@implementation Gameplay
+@implementation Gameplay {
+    Grid* _grid;
+}
 
-
+- (void) didLoadFromCCB {
+    [_grid set_scoreLabel1:__scoreLabel];
+    [_grid set_moveLabel1:__moveLabel];
+}
 - (void) menu {
     [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 }

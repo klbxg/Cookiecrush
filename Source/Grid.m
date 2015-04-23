@@ -72,8 +72,8 @@ static const int GRID_ROWS = 9;
     
     self.movesLeft = 20;
     self.score = 0;
-    self._moveLabel1 = self.gameplay._moveLabel;
-    self._scoreLabel1 = self.gameplay._scoreLabel;
+    //self._moveLabel1 = self.gameplay._moveLabel;
+    //self._scoreLabel1 = self.gameplay._scoreLabel;
     
     NSMutableSet *set = [NSMutableSet set];
     
@@ -634,9 +634,9 @@ static const int GRID_ROWS = 9;
 - (void)updateLabels {
     //self.gameplay._targetLabel.string = [NSString stringWithFormat:@"%lu", (long)self.targetScore];
 //    self.gameplay._moveLabel.string = [NSString stringWithFormat:@"%lu", (long)self.movesLeft];
-    self._moveLabel1.string = [NSString stringWithFormat:@"%lu", (long)self.movesLeft];
+    [[self _moveLabel1] setString:[NSString stringWithFormat:@"%lu", (long)self.movesLeft]];
     CCLOG(@"moveleft %lu", self.movesLeft);
-    self._scoreLabel1.string = [NSString stringWithFormat:@"%lu", (long)self.score];
+    [[self _scoreLabel1] setString:[NSString stringWithFormat:@"%lu", (long)self.score]];
     CCLOG(@"score %lu", self.score);
 }
 
