@@ -23,6 +23,7 @@ static const int GRID_ROWS = 9;
     float _cellHeight;
 }
 
+
 - (void)onEnter
 {
     [super onEnter];
@@ -68,6 +69,11 @@ static const int GRID_ROWS = 9;
 }
 
 - (NSSet *)createInitialCookies {
+    
+    self.movesLeft = 20;
+    self.score = 0;
+    self._moveLabel1 = self.gameplay._moveLabel;
+    self._scoreLabel1 = self.gameplay._scoreLabel;
     
     NSMutableSet *set = [NSMutableSet set];
     
@@ -268,15 +274,12 @@ static const int GRID_ROWS = 9;
 
 - (void) showSelectionIndicatorForCookie:(Creature *)cookie {
     NSMutableArray *frames = [NSMutableArray array];
-    // If the selection indicator is still visible, then first remove it.
-//            if (self.selectionSprite.parent != nil) {
-//                [self.selectionSprite removeFromParent];
-//            }
     
     // Add the selection indicator as a child to the cookie that the player
     // tapped on and fade it in. Note: simply setting the texture on the sprite
     // doesn't give it the correct size; using an SKAction does.
-    CCTexture *texture = [CCTexture textureWithFile:[NSString stringWithFormat:@"image/cookiehighlight-%d.png", cookie.cookieType]];
+    cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookiehighlight-%lu.png", (unsigned long)cookie.cookieType]];
+    //CCTexture *texture = [CCTexture textureWithFile:[NSString stringWithFormat:@"image/cookiehighlight-%lu.png", (unsigned long)cookie.cookieType]];
         //更换贴图
     //CCTexture * texture =[[CCTextureCache sharedTextureCache] addImage: [NSString stringWithFormat:@"image/cookiehighlight-%d.png", cookie.cookieType]];//新建贴图
     //[cookie setTexture:texture];
@@ -288,17 +291,18 @@ static const int GRID_ROWS = 9;
     //self.selectionSprite.contentSize = texture.contentSize;
     //[self.selectionSprite runAction:[CCAction setTexture:texture]];
     //[frames addObject:frame];
-    [self.selectionSprite setTexture:texture];
-    //[self.selectionSprite addChild:cookie z:100];
-    self.selectionSprite.opacity = 1.0;
+    //[self.selectionSprite setTexture:texture];
+    //[cookie addChild:self.selectionSprite];
+    //self.selectionSprite.opacity = 1.0;
 }
 - (void)hideSelectionIndicator {
 //    [self.selectionSprite runAction:[SKAction sequence:@[
 //                                                         [SKAction fadeOutWithDuration:0.3],
 //                                                         [SKAction removeFromParent]]]];
-    CCTexture *texture = [CCTexture textureWithFile:[NSString stringWithFormat:@"image/cookie-%d.png", self.cookie1.cookieType]];
-    CCLOG(@"%d", self.cookie1.cookieType);
-    [self.selectionSprite setTexture:texture];
+    //CCTexture *texture = [CCTexture textureWithFile:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)self.cookie1.cookieType]];
+    self.cookie1.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)self.cookie1.cookieType]];
+    CCLOG(@"%lu", (unsigned long)self.cookie1.cookieType);
+    //[self.selectionSprite setTexture:texture];
     self.cookie1 = nil;
 }
 - (NSSet *)removeMatches {
@@ -316,8 +320,8 @@ static const int GRID_ROWS = 9;
     //[self fillHoles];
     //[self topUpCookies];
     
-    //[self calculateScores:horizontalChains];
-    //[self calculateScores:verticalChains];
+    [self calculateScores:horizontalChains];
+    [self calculateScores:verticalChains];
     
     return [horizontalChains setByAddingObjectsFromSet:verticalChains];
 }
@@ -373,13 +377,13 @@ static const int GRID_ROWS = 9;
     }
 }
 
-//- (void)calculateScores:(NSSet *)chains {
-//    // 3-chain is 60 pts, 4-chain is 120, 5-chain is 180, and so on
-//    for (Chain *chain in chains) {
-//        chain.score = 60 * ([chain.cookies count] - 2) * self.comboMultiplier;
-//        self.comboMultiplier++;
-//    }
-//}
+- (void)calculateScores:(NSSet *)chains {
+    // 3-chain is 30 pts, 4-chain is 60, 5-chain is 90, and so on
+    for (Chain *chain in chains) {
+        chain.score = 30 * ([chain.cookies count] - 2) * self.comboMultiplier;
+        self.comboMultiplier++;
+    }
+}
 
 
 // Same as the horizontal version but just steps through the array differently.
@@ -496,9 +500,18 @@ static const int GRID_ROWS = 9;
         for (Creature *cookie in chain.cookies) {
             
             if (cookie != nil) {
+                // load particle effect
+                CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"removeeffect"];
+                // place the particle effect on the seals position
+                explosion.position = cookie.position;
+                // add the particle effect to the same node the seal is on
+                [self addChild:explosion];
+                // make the particle effect clean itself up, once it is completed
+                explosion.autoRemoveOnFinish = YES;
+
                 CCActionScaleTo *scaleAction = [CCActionScaleTo actionWithDuration:0.3 scale:0.1f];
                 //scaleAction.timingMode = SKActionTimingEaseOut;
-                [cookie.sprite runAction:scaleAction];
+                [cookie.sprite runAction:[CCActionEaseBackOut actionWithAction:scaleAction]];
                 [cookie.sprite removeFromParent];
                 // It may happen that the same RWTCookie object is part of two chains
                 // (L-shape match). In that case, its sprite should only be removed
@@ -521,16 +534,13 @@ static const int GRID_ROWS = 9;
     swap.cookieA.zOrder= 100;
     swap.cookieB.zOrder = 90;
     
-    const NSTimeInterval Duration = 0.2;
+    const NSTimeInterval Duration = 0.3;
     
     CCActionMoveTo *moveA = [CCActionMoveTo actionWithDuration: Duration position:swap.cookieB.position];
-    //moveA.timingMode = SKActionTimingEaseOut;
     
     CCActionMoveTo *moveB = [CCActionMoveTo actionWithDuration: Duration position:swap.cookieA.position];
-    //moveB.timingMode = SKActionTimingEaseOut;
-    [swap.cookieA runAction:[CCActionSequence actionWithArray:@[moveA,moveB, [CCActionCallBlock actionWithBlock:completion]]]];
-    //[swap.cookieA.sprite runAction:[SKAction sequence:@[moveA, moveB, [SKAction runBlock:completion]]]];
-    [swap.cookieB runAction:[CCActionSequence actionWithArray:@[moveB, moveA]]];
+    [swap.cookieA runAction:[CCActionSequence actionWithArray:@[[CCActionEaseBackOut actionWithAction:moveA],[CCActionEaseBackOut actionWithAction:moveB], [CCActionCallBlock actionWithBlock:completion]]]];
+    [swap.cookieB runAction:[CCActionSequence actionWithArray:@[[CCActionEaseBackOut actionWithAction:moveB], [CCActionEaseBackOut actionWithAction:moveA]]]];
     
     //[self runAction:self.invalidSwapSound];
 }
@@ -556,7 +566,7 @@ static const int GRID_ROWS = 9;
             CCActionMoveTo *moveAction = [CCActionMoveTo actionWithDuration: duration position:newPosition];
             //moveAction.timingMode = SKActionTimingEaseOut;
             [cookie runAction:[CCActionSequence actionWithArray:@[
-                                                                  [CCActionDelay actionWithDuration:delay],moveAction]]];
+                                                                  [CCActionDelay actionWithDuration:delay],[CCActionEaseBackOut actionWithAction:moveAction]]]];
 //                                                          [CCActionSequence actionWithArray:@[moveAction, self.fallingCookieSound]]]]];
         }];
     }
@@ -583,17 +593,6 @@ static const int GRID_ROWS = 9;
         CCLOG(@"%ld", (long)startRow);
         [array enumerateObjectsUsingBlock:^(Creature *cookie, NSUInteger idx, BOOL *stop) {
             
-            // Create a new sprite for the cookie.
-            //CCSprite *sprite = [SKSpriteNode spriteNodeWithImageNamed:[cookie spriteName]];
-            //int newCookieType = arc4random_uniform(6);
-            //Creature *sprite = [super initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", newCookieType]];
-            //CCSprite * sprite = [[CCSprite alloc] initWithImageNamed:[NSString stringWithFormat:@"image/cookie-%d.png", newCookieType]];
-            //Creature * sprite = [[Creature alloc] initCreature:newCookieType];
-            //sprite.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)cookie.cookieType]];
-            //cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", (unsigned long)newCookieType]];
-            //[self addSpritesForCookies:];
-            //sprite.position = [self pointForColumn:cookie.column row:startRow];
-            CCLOG(@"animation %ld, %ld", cookie.column, (long)startRow);
             cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/cookie-%lu.png", cookie.cookieType]];
             CGPoint oldPosition = [self pointForColumn:cookie.column row:startRow];
             CGPoint cookiePos = [self pointForColumn:cookie.column row:cookie.row];
@@ -602,13 +601,12 @@ static const int GRID_ROWS = 9;
             [self addChild:cookie];
             
             NSTimeInterval delay = 0.1 + 0.2*([array count] - idx - 1);
-            //            CCLOG(@"delay %f", delay);
+            
             NSTimeInterval duration = (startRow - cookie.row) * 0.1;
-            //            CCLOG(@"startRow %ld, %d", (long)startRow, (int)cookie.row);
+            
             longestDuration = MAX(longestDuration, (duration + delay));
-            //CGPoint newPosition = [self pointForColumn:cookie.column row:cookie.row];
+            
             CGPoint newPosition = CGPointMake(0.0, 0.0);
-            //[cookie.sprite setPosition:newPosition];
             
              CCLOG(@"newPostion %ld, %d", (long)cookie.column, (int)cookie.row);
              CCActionMoveTo *moveAction = [CCActionMoveTo actionWithDuration: duration position:newPosition];
@@ -633,15 +631,38 @@ static const int GRID_ROWS = 9;
     _cellHeight = self.contentSize.height / GRID_ROWS;
     return CGPointMake(column*_cellWidth + _cellWidth/2, row*_cellHeight + _cellHeight/2);
 }
+- (void)updateLabels {
+    //self.gameplay._targetLabel.string = [NSString stringWithFormat:@"%lu", (long)self.targetScore];
+//    self.gameplay._moveLabel.string = [NSString stringWithFormat:@"%lu", (long)self.movesLeft];
+    self._moveLabel1.string = [NSString stringWithFormat:@"%lu", (long)self.movesLeft];
+    CCLOG(@"moveleft %lu", self.movesLeft);
+    self._scoreLabel1.string = [NSString stringWithFormat:@"%lu", (long)self.score];
+    CCLOG(@"score %lu", self.score);
+}
+
+- (void)decrementMoves{
+    self.movesLeft--;
+    CCLOG(@"moveleft %lu", self.movesLeft);
+    [self updateLabels];
+    
+//    if (self.score >= self.level.targetScore) {
+//        self.gameOverPanel.image = [UIImage imageNamed:@"LevelComplete"];
+//        [self showGameOver];
+//    } else if (self.movesLeft == 0) {
+//        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
+//        [self showGameOver];
+//    }
+}
+
 
 - (void)beginNextTurn {
-    //[self resetComboMultiplier];
+    [self resetComboMultiplier];
     [self detectPossibleSwaps];
     self.userInteractionEnabled = YES;
-    //[self decrementMoves];
+    [self decrementMoves];
 }
 - (void)resetComboMultiplier {
-    //self.comboMultiplier = 1;
+    self.comboMultiplier = 1;
 }
 - (void)handleMatches {
     // This is the main loop that removes any matching cookies and fills up the
@@ -660,11 +681,12 @@ static const int GRID_ROWS = 9;
     // First, remove any matches...
     [self animateMatchedCookies:chains completion:^{
         
-        // Add the new scores to the total.
-//        for (Chain *chain in chains) {
-//            self.score += chain.score;
-//        }
-//        [self updateLabels];
+        //Add the new scores to the total.
+        for (Chain *chain in chains) {
+            self.score += chain.score;
+            CCLOG(@"self chain %lu, %lu", self.score, chain.score);
+        };
+        [self updateLabels];
         
         // ...then shift down any cookies that have a hole below them...
         NSArray *columns = [self fillHoles];

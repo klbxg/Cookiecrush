@@ -10,6 +10,7 @@
 
 @implementation Gameplay
 
+
 - (void) menu {
     [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 }
@@ -19,7 +20,7 @@
 }
 - (void) shuffle {
     CCLOG(@"shuffle button pressed");
-    Grid* grid;
+    //Grid* grid;
     //NSSet *set = [grid.shuffle];
 }
 
