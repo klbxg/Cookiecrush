@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "927F6198196C771E000F43EF"
-               BuildableName = "Example"
+               BuildableName = "weiligame Android.app"
                BlueprintName = "weiligame Android"
                ReferencedContainer = "container:weiligame.xcodeproj">
             </BuildableReference>
@@ -48,11 +48,12 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "927F6198196C771E000F43EF"
-            BuildableName = "Example"
+            BuildableName = "weiligame Android.app"
             BlueprintName = "weiligame Android"
             ReferencedContainer = "container:weiligame.xcodeproj">
          </BuildableReference>
@@ -66,7 +67,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "927F6198196C771E000F43EF"
