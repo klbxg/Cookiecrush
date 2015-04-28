@@ -86,21 +86,33 @@ static __weak Gameplay2* _currentGameScene;
 }
 - (void) sharetimemode
 {
-    CCScene *myScene = [[CCDirector sharedDirector] runningScene];
-    CCNode *node = [myScene.children objectAtIndex:0];
-    UIImage *image = [Gameplay2 screenshotWithStartNode:node];
-    
-    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
-    photo.image = image;
-    photo.userGenerated = YES;
-    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
-    content.photos = @[photo];
-    
-    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
-    dialog.fromViewController = [CCDirector sharedDirector];
-    [dialog setShareContent:content];
-    dialog.mode = FBSDKShareDialogModeShareSheet;
-    [dialog show];
+//    CCScene *myScene = [[CCDirector sharedDirector] runningScene];
+//    CCNode *node = [myScene.children objectAtIndex:0];
+//    UIImage *image = [Gameplay2 screenshotWithStartNode:node];
+//    
+//    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+//    photo.image = image;
+//    photo.userGenerated = YES;
+//    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+//    content.photos = @[photo];
+//    
+//    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+//    dialog.fromViewController = [CCDirector sharedDirector];
+//    [dialog setShareContent:content];
+//    dialog.mode = FBSDKShareDialogModeShareSheet;
+//    [dialog show];
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    // this should link to FB page for your app or AppStore link if published
+    content.contentURL = [NSURL URLWithString:@"https://enclosegame.com/"];
+    // URL of image to be displayed alongside post
+    //content.imageURL = [NSURL URLWithString:@"https://git.makeschool.com/MakeSchool-Tutorials/News/f744d331484d043a373ee2a33d63626c352255d4//663032db-cf16-441b-9103-c518947c70e1/cover_photo.jpeg"];
+    // title of post
+    content.contentTitle = [NSString stringWithFormat:@"I just got %zu scores in SushiTime!", _grid1.score];
+    // description/body of post
+    content.contentDescription = @"Come challenge me!";
+    [FBSDKShareDialog showFromViewController:[CCDirector sharedDirector]
+                                 withContent:content
+                                    delegate:nil];
     
 }
 

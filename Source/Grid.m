@@ -246,7 +246,7 @@ static const int GRID_ROWS = 9;
 }
 
 - (void) showSelectionIndicatorForCookie:(Creature *)cookie {
-    NSMutableArray *frames = [NSMutableArray array];
+    //NSMutableArray *frames = [NSMutableArray array];
     
     cookie.sprite.spriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"image/sushihighlight-%lu.png", (unsigned long)cookie.cookieType]];
     self.cookie1 = cookie;
@@ -544,10 +544,10 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
     if (self.states == FALSE) {
-        if (self.score >= 2000) {
-            //        self.gameOverPanel.image = [UIImage imageNamed:@"LevelComplete"];
-            //        [self showGameOver];
-            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+        if (self.score >= 100) {
+            UIImage *uiImage = [UIImage imageNamed:@"image/LevelComplete.png"];
+            //[self showGameOver];
+            //[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
             
         } else if (self.movesLeft == 0) {
             //        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
