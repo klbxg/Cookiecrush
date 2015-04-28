@@ -9,20 +9,16 @@
 #import "CCNode.h"
 #import "Grid.h"
 
+
 @class Grid;
 
 @interface Gameplay2 : CCNode
-{
-    CCNode* _pauselayer;
-    long _frame;
-}
+
 //+ (Gameplay2*) currentGameScene;
 @property(assign, nonatomic) CCLabelTTF *_timeLabel;
 @property(assign, nonatomic) CCLabelTTF *_timescore;
 @property Grid* grid;
 
-// Callbacks from PauseLayer
-- (void) pressedContinue;
-- (void) pressedGiveUp;
+-(void) Continue;
 
 @end

@@ -9,11 +9,14 @@
 #import "Gameplay2.h"
 #import "Grid.h"
 #import "Pauselayer.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 static __weak Gameplay2* _currentGameScene;
 
 @implementation Gameplay2{
     Grid* _grid1;
+    Pauselayer * _pauselayer;
     int secs;
 }
 
@@ -28,9 +31,8 @@ static __weak Gameplay2* _currentGameScene;
     _currentGameScene = self;
     secs = 180;
     [_grid1 set_scoreLabel1:__timescore];
-    //[_grid set_moveLabel1:__timeLabel];
     [self schedule:@selector(updateTimeDisplay:) interval:1];
-    
+    _pauselayer.gameplay2 = self;
     self.grid.paused = YES;
 }
 
@@ -46,7 +48,6 @@ static __weak Gameplay2* _currentGameScene;
         timeStr = [NSString stringWithFormat:@"1:%02d", secs%60];
     }
     else timeStr = [NSString stringWithFormat:@"0:%02d", secs];
-    NSLog(timeStr);
     self._timeLabel.string = timeStr;
     
     if (secs == 0)
@@ -65,41 +66,57 @@ static __weak Gameplay2* _currentGameScene;
     [[CCDirector sharedDirector] replaceScene:gameplay2Scene];
 }
 - (void) pause {
-    self.grid.paused = YES;
     self.paused = YES;
-    self.grid.userInteractionEnabled = NO;
-    
-    _pauselayer.visible = YES;
-    CCScene *pauselayerScene = [CCBReader loadAsScene:@"Pauselayer"];
-    [[CCDirector sharedDirector] replaceScene:pauselayerScene];
-}
-
-- (void) pressedPause:(CCButton*) sender
-{
-    //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
-    
-    self.grid.paused = YES;
-    self.grid.userInteractionEnabled = NO;
+    _grid1.userInteractionEnabled = NO;
     
     _pauselayer.visible = YES;
 }
 
-- (void) pressedContinue
+- (void) Continue
 {
     //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
-    
-    self.grid.paused = NO;
-    self.paused = NO;
-    self.grid.userInteractionEnabled = YES;
-    
     _pauselayer.visible = NO;
+    self.paused = NO;
+    _grid1.userInteractionEnabled = YES;
+    
+}
+- (void) giveup
+{
+    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+}
+- (void) sharetimemode
+{
+    CCScene *myScene = [[CCDirector sharedDirector] runningScene];
+    CCNode *node = [myScene.children objectAtIndex:0];
+    UIImage *image = [Gameplay2 screenshotWithStartNode:node];
+    
+    FBSDKSharePhoto *photo = [[FBSDKSharePhoto alloc] init];
+    photo.image = image;
+    photo.userGenerated = YES;
+    FBSDKSharePhotoContent *content = [[FBSDKSharePhotoContent alloc] init];
+    content.photos = @[photo];
+    
+    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+    dialog.fromViewController = [CCDirector sharedDirector];
+    [dialog setShareContent:content];
+    dialog.mode = FBSDKShareDialogModeShareSheet;
+    [dialog show];
+    
 }
 
-- (void) pressedGiveUp
++(UIImage*) screenshotWithStartNode:(CCNode*)stNode
 {
-    //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+    [CCDirector sharedDirector].nextDeltaTimeZero = YES;
     
-    [self.animationManager runAnimationsForSequenceNamed:@"outro"];
+    CGSize winSize = [[CCDirector sharedDirector] viewSize];
+    CCRenderTexture* renTxture =
+    [CCRenderTexture renderTextureWithWidth:winSize.width
+                                     height:winSize.height];
+    [renTxture begin];
+    [stNode visit];
+    [renTxture end];
+    
+    return [renTxture getUIImage];
 }
 
 @end

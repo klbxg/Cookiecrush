@@ -10,6 +10,8 @@
 		5B121030197484FA004C1E1D /* weiligameActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* weiligameActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
 		6F21C1421ADE052500BC839D /* Pauselayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F21C1411ADE052500BC839D /* Pauselayer.m */; };
+		6F30329C1AF0011F00B17CE3 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F30329A1AF0011F00B17CE3 /* FBSDKCoreKit.framework */; };
+		6F30329D1AF0011F00B17CE3 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F30329B1AF0011F00B17CE3 /* FBSDKShareKit.framework */; };
 		6F3F723E1ADC829A00BFF5CD /* Cookie.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F723D1ADC829A00BFF5CD /* Cookie.m */; };
 		6F3F72411ADD5FCB00BFF5CD /* Swap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72401ADD5FCB00BFF5CD /* Swap.m */; };
 		6F3F72441ADD94A300BFF5CD /* Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72431ADD94A300BFF5CD /* Chain.m */; };
@@ -169,6 +171,8 @@
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
 		6F21C1401ADE052500BC839D /* Pauselayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pauselayer.h; path = Source/Pauselayer.h; sourceTree = "<group>"; };
 		6F21C1411ADE052500BC839D /* Pauselayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pauselayer.m; path = Source/Pauselayer.m; sourceTree = "<group>"; };
+		6F30329A1AF0011F00B17CE3 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		6F30329B1AF0011F00B17CE3 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		6F3F723C1ADC829A00BFF5CD /* Cookie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cookie.h; path = Source/Cookie.h; sourceTree = "<group>"; };
 		6F3F723D1ADC829A00BFF5CD /* Cookie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cookie.m; path = Source/Cookie.m; sourceTree = "<group>"; };
 		6F3F723F1ADD5FCB00BFF5CD /* Swap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Swap.h; path = Source/Swap.h; sourceTree = "<group>"; };
@@ -281,8 +285,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A97911819E631CD001FFC4D /* libcocos2d.a in Frameworks */,
+				6F30329C1AF0011F00B17CE3 /* FBSDKCoreKit.framework in Frameworks */,
 				8392007A18EE8E3300B6C429 /* GLKit.framework in Frameworks */,
 				B77F1B3217B978D7009739AE /* QuartzCore.framework in Frameworks */,
+				6F30329D1AF0011F00B17CE3 /* FBSDKShareKit.framework in Frameworks */,
 				B77F1B3417B978D7009739AE /* OpenGLES.framework in Frameworks */,
 				B77F1B3617B978D7009739AE /* OpenAL.framework in Frameworks */,
 				B77F1B3817B978D7009739AE /* AudioToolbox.framework in Frameworks */,
@@ -530,6 +536,8 @@
 		B77F1B3017B978D7009739AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F30329A1AF0011F00B17CE3 /* FBSDKCoreKit.framework */,
+				6F30329B1AF0011F00B17CE3 /* FBSDKShareKit.framework */,
 				BC5399D31A44DCC90063F482 /* AndroidKit.framework */,
 				BC5399D41A44DCC90063F482 /* CoreJava.framework */,
 				BC5399D51A44DCC90063F482 /* GLActivityKit.framework */,
@@ -1152,6 +1160,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/weiweili/Documents/FacebookSDK,
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/Prefix.pch;
@@ -1187,6 +1199,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/weiweili/Documents/FacebookSDK,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Source/Prefix.pch;
 				HEADER_SEARCH_PATHS = (

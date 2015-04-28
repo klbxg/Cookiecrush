@@ -7,7 +7,12 @@
 //
 
 #import "CCNode.h"
+#import "Gameplay2.h"
+#import "Grid.h"
 
-@interface Pauselayer : CCNode
+@interface Pauselayer : CCScene
+
+@property Gameplay2 * gameplay2;
+
 
 @end

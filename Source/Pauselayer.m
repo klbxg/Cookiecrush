@@ -7,15 +7,16 @@
 //
 
 #import "Pauselayer.h"
-#import "Gameplay2.h"
+
 
 @implementation Pauselayer
+
 - (void) Continue
 {
-    //[[Gameplay2 currentGameScene] pressedContinue];
-//    CCScene *gameplayScene = Gameplay2.currentGameScene;
-//    [[CCDirector sharedDirector] replaceScene:gameplayScene];
-
+    self.visible = NO;
+    _gameplay2.paused = NO;
+    [_gameplay2 Continue];
+    //self.grid.userInteractionEnabled = YES;
 }
 
 - (void) giveup
