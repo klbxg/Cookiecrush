@@ -39,20 +39,21 @@ static __weak Gameplay2* _currentGameScene;
     secs -= 1;
     NSString* timeStr = NULL;
     if (secs >= 180) timeStr = @"3:00";
+    else if (secs >= 120) {
+        timeStr = [NSString stringWithFormat:@"2:%02d", secs%60];
+    }
+    else if (secs >= 60) {
+        timeStr = [NSString stringWithFormat:@"1:%02d", secs%60];
+    }
     else timeStr = [NSString stringWithFormat:@"0:%02d", secs];
     NSLog(timeStr);
     self._timeLabel.string = timeStr;
     
-//    if (!_gameOver && secs == 0)
-//    {
-//        [self startGameOver];
-//    }
-//    
-//    if (!_startedEndTimer && secs <= 5)
-//    {
-//        _startedEndTimer = YES;
-//        //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/timer.wav"];
-//    }
+    if (secs == 0)
+    {
+        [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+    }
+    
 }
 
 
