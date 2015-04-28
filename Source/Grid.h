@@ -11,10 +11,12 @@
 #import "Swap.h"
 #import "Gameplay.h"
 
+
 @interface Grid : CCSprite 
 @property(assign, nonatomic) CCLabelTTF *_targetLabel1;
 @property(assign, nonatomic) CCLabelTTF *_moveLabel1;
 @property(assign, nonatomic) CCLabelTTF *_scoreLabel1;
+@property(assign, nonatomic) CCLabelTTF *_timeLabel1;
 @property (assign, nonatomic) NSUInteger targetScore;
 @property (assign, nonatomic) NSUInteger maximumMoves;
 @property (assign, nonatomic) NSUInteger movesLeft;
@@ -29,6 +31,7 @@
 @property (strong, nonatomic) CCAction *fallingCookieSound;
 @property (strong, nonatomic) CCAction *addCookieSound;
 @property (copy, nonatomic) void (^swipeHandler)(Swap *swap);
+@property (assign, nonatomic) BOOL states;
 //- (void) showSelectionIndicatorForCookie:(Creature *)cookie;
 - (NSSet *)shuffle;
 @end

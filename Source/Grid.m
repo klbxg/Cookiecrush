@@ -10,10 +10,12 @@
 #import "Creature.h"
 #import "Swap.h"
 #import "Chain.h"
+#import "Gameplay2.h"
 
 // these are variables that cannot be changed
 static const int GRID_COLUMNS = 9;
 static const int GRID_ROWS = 9;
+
 
 
 @implementation Grid {
@@ -638,20 +640,26 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [[self _scoreLabel1] setString:[NSString stringWithFormat:@"%lu", (long)self.score]];
     CCLOG(@"score %lu", self.score);
+    //[[self _scoreLabel2] setString:[NSString stringWithFormat:@"%lu", (long)self.score]];
 }
 
 - (void)decrementMoves{
     self.movesLeft--;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
-    
-//    if (self.score >= self.level.targetScore) {
-//        self.gameOverPanel.image = [UIImage imageNamed:@"LevelComplete"];
-//        [self showGameOver];
-//    } else if (self.movesLeft == 0) {
-//        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
-//        [self showGameOver];
-//    }
+    if (self.states == FALSE) {
+        if (self.score >= 2000) {
+            //        self.gameOverPanel.image = [UIImage imageNamed:@"LevelComplete"];
+            //        [self showGameOver];
+            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+            
+        } else if (self.movesLeft == 0) {
+            //        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
+            //        [self showGameOver];
+            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+        }
+
+    }
 }
 
 

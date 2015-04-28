@@ -13,8 +13,8 @@
 - (void) Continue
 {
     //[[Gameplay2 currentGameScene] pressedContinue];
-    CCScene *gameplayScene = Gameplay2.currentGameScene;
-    [[CCDirector sharedDirector] replaceScene:gameplayScene];
+//    CCScene *gameplayScene = Gameplay2.currentGameScene;
+//    [[CCDirector sharedDirector] replaceScene:gameplayScene];
 
 }
 

@@ -14,6 +14,7 @@
 }
 
 - (void) didLoadFromCCB {
+    _grid.states = FALSE;
     [_grid set_scoreLabel1:__scoreLabel];
     [_grid set_moveLabel1:__moveLabel];
 }
@@ -23,11 +24,6 @@
 - (void) replay {
     CCScene *gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
     [[CCDirector sharedDirector] replaceScene:gameplayScene];
-}
-- (void) shuffle {
-    CCLOG(@"shuffle button pressed");
-    //Grid* grid;
-    //NSSet *set = [grid.shuffle];
 }
 
 @end

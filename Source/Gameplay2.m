@@ -12,7 +12,10 @@
 
 static __weak Gameplay2* _currentGameScene;
 
-@implementation Gameplay2
+@implementation Gameplay2{
+    Grid* _grid1;
+    int secs;
+}
 
 + (Gameplay2*) currentGameScene
 {
@@ -21,9 +24,35 @@ static __weak Gameplay2* _currentGameScene;
 
 - (void) didLoadFromCCB
 {
+    _grid1.states = true;
     _currentGameScene = self;
+    secs = 180;
+    [_grid1 set_scoreLabel1:__timescore];
+    //[_grid set_moveLabel1:__timeLabel];
+    [self schedule:@selector(updateTimeDisplay:) interval:1];
     
     self.grid.paused = YES;
+}
+
+- (void) updateTimeDisplay:(CCTime)delta
+{
+    secs -= 1;
+    NSString* timeStr = NULL;
+    if (secs >= 180) timeStr = @"3:00";
+    else timeStr = [NSString stringWithFormat:@"0:%02d", secs];
+    NSLog(timeStr);
+    self._timeLabel.string = timeStr;
+    
+//    if (!_gameOver && secs == 0)
+//    {
+//        [self startGameOver];
+//    }
+//    
+//    if (!_startedEndTimer && secs <= 5)
+//    {
+//        _startedEndTimer = YES;
+//        //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/timer.wav"];
+//    }
 }
 
 
@@ -36,6 +65,7 @@ static __weak Gameplay2* _currentGameScene;
 }
 - (void) pause {
     self.grid.paused = YES;
+    self.paused = YES;
     self.grid.userInteractionEnabled = NO;
     
     _pauselayer.visible = YES;
@@ -43,12 +73,9 @@ static __weak Gameplay2* _currentGameScene;
     [[CCDirector sharedDirector] replaceScene:pauselayerScene];
 }
 
-- (void) shuffle {
-    CCLOG(@"shuffle button pressed");
-}
 - (void) pressedPause:(CCButton*) sender
 {
-    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+    //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
     
     self.grid.paused = YES;
     self.grid.userInteractionEnabled = NO;
@@ -61,6 +88,7 @@ static __weak Gameplay2* _currentGameScene;
     //[[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
     
     self.grid.paused = NO;
+    self.paused = NO;
     self.grid.userInteractionEnabled = YES;
     
     _pauselayer.visible = NO;
