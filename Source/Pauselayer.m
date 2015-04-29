@@ -21,6 +21,7 @@
 
 - (void) giveup
 {
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
     [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];}
 
 @end

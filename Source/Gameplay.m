@@ -21,9 +21,23 @@
     [_grid set_moveLabel1:__moveLabel];
 }
 - (void) menu {
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+    [_grid stopSound];
     [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 }
+//- (void) menupage {
+//    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+//    [_grid stopSound];
+//    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+//}
+//- (void) menu1 {
+//    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+//    [_grid stopSound];
+//    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+//}
 - (void) replay {
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
+    [_grid stopSound];
     CCScene *gameplayScene = [CCBReader loadAsScene:@"Gameplay"];
     [[CCDirector sharedDirector] replaceScene:gameplayScene];
 }

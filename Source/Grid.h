@@ -34,4 +34,5 @@
 @property (assign, nonatomic) BOOL states;
 //- (void) showSelectionIndicatorForCookie:(Creature *)cookie;
 - (NSSet *)shuffle;
+- (void) stopSound;
 @end

@@ -22,13 +22,17 @@ static const int GRID_ROWS = 9;
     NSMutableArray *_gridArray;
     float _cellWidth;
     float _cellHeight;
+    CCNode *popup;
 }
 
-
+- (void) stopSound {
+    OALSimpleAudio *audio = [OALSimpleAudio sharedInstance];
+    [audio stopBg];
+}
 - (void)onEnter
 {
     [super onEnter];
-    
+    [[OALSimpleAudio sharedInstance] playBg:@"Sounds/Mining by Moonlight.mp3" loop:YES];
     id block = ^(Swap *swap) {
         
         self.userInteractionEnabled = NO;
@@ -65,7 +69,7 @@ static const int GRID_ROWS = 9;
 
 - (NSSet *)createInitialCookies {
     
-    self.movesLeft = 30;
+    self.movesLeft = 5;
     self.score = 0;
     
     NSMutableSet *set = [NSMutableSet set];
@@ -416,6 +420,7 @@ static const int GRID_ROWS = 9;
     //CCLOG(@"animateswap %ld, %d", (long)swap.cookieB.column, swap.cookieB.row);
     CCActionMoveTo *moveB = [CCActionMoveTo actionWithDuration: Duration position:swap.cookieA.position];
     [swap.cookieB runAction:moveB];
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/Chomp.wav"];
 }
 - (void)animateMatchedCookies:(NSSet *)chains completion:(dispatch_block_t)completion {
     
@@ -437,7 +442,7 @@ static const int GRID_ROWS = 9;
         }
     }
     
-    //[self runAction:self.matchSound];
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/Ka-Ching.wav"];
     [self runAction:[CCActionSequence actionWithArray:@[
                                                 [CCActionDelay actionWithDuration:0.3],
                                                 [CCActionCallBlock actionWithBlock:completion]
@@ -456,7 +461,7 @@ static const int GRID_ROWS = 9;
     [swap.cookieA runAction:[CCActionSequence actionWithArray:@[[CCActionEaseBackOut actionWithAction:moveA],[CCActionEaseBackOut actionWithAction:moveB], [CCActionCallBlock actionWithBlock:completion]]]];
     [swap.cookieB runAction:[CCActionSequence actionWithArray:@[[CCActionEaseBackOut actionWithAction:moveB], [CCActionEaseBackOut actionWithAction:moveA]]]];
     
-    //[self runAction:self.invalidSwapSound];
+    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/Error.wav"];
 }
 - (void)animateFallingCookies:(NSArray *)columns completion:(dispatch_block_t)completion {
     __block NSTimeInterval longestDuration = 0;
@@ -475,7 +480,7 @@ static const int GRID_ROWS = 9;
             CCActionMoveTo *moveAction = [CCActionMoveTo actionWithDuration: duration position:newPosition];
             [cookie runAction:[CCActionSequence actionWithArray:@[
                                                                   [CCActionDelay actionWithDuration:delay],[CCActionEaseBackOut actionWithAction:moveAction]]]];
-//                                                          [CCActionSequence actionWithArray:@[moveAction, self.fallingCookieSound]]]]];
+            [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/Scrape.wav"];
         }];
     }
     
@@ -515,9 +520,8 @@ static const int GRID_ROWS = 9;
              id fadeInAction = [CCActionSpawn actionOne:[CCActionFadeIn actionWithDuration:0.05] two:moveAction];
              id delayAniamtion = [CCActionDelay actionWithDuration:delay];
              [cookie.sprite runAction:[CCActionSequence actions:delayAniamtion,fadeInAction,nil]];
-             //                                                          [CCActionSequence actionWithArray:@[
-             //                                                                                             [CCActionFadeIn actionWithDuration:0.05], moveAction]]]]]; //self.addCookieSound]]]]];
-             
+            
+             [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/Drip.wav"];
         }];
     }
     
@@ -544,15 +548,27 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
     if (self.states == FALSE) {
-        if (self.score >= 4000) {
-            //UIImage *uiImage = [UIImage imageNamed:@"image/LevelComplete.png"];
-            //[self showGameOver];
-            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+        if (self.score >= 3000) {
+            popup = [CCBReader load:@"Congrats" owner:self.parent];
+            popup.anchorPoint = ccp(0.5,0.5);
+            popup.positionType = CCPositionTypeNormalized;
+            popup.position = ccp(0.5,0.5);
+            [self.parent addChild:popup];
+            self.userInteractionEnabled = NO;
+            self.parent.userInteractionEnabled = NO;
+            self.paused = YES;
+            self.parent.paused = YES;
             
         } else if (self.movesLeft <= 0) {
-            //        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
-            //        [self showGameOver];
-            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+            popup = [CCBReader load:@"Gameover" owner:self.parent];
+            popup.anchorPoint = ccp(0.5,0.5);
+            popup.positionType = CCPositionTypeNormalized;
+            popup.position = ccp(0.5,0.5);
+            [self.parent addChild:popup];
+            self.userInteractionEnabled = NO;
+            self.parent.userInteractionEnabled = NO;
+            self.paused = YES;
+            self.parent.paused = YES;
         }
 
     }
@@ -704,5 +720,13 @@ static const int GRID_ROWS = 9;
     
     return _cookies[column][row];
 }
-
+//- (void)preloadResources {
+//    self.swapSound = [CCAction playSoundFileNamed:@"Chomp.wav" waitForCompletion:NO];
+//    self.invalidSwapSound = [CCAction playSoundFileNamed:@"Error.wav" waitForCompletion:NO];
+//    self.matchSound = [CCAction playSoundFileNamed:@"Ka-Ching.wav" waitForCompletion:NO];
+//    self.fallingCookieSound = [CCAction playSoundFileNamed:@"Scrape.wav" waitForCompletion:NO];
+//    self.addCookieSound = [CCAction playSoundFileNamed:@"Drip.wav" waitForCompletion:NO];
+//    
+//    //[CCLabelNode labelNodeWithFontNamed:@"GillSans-BoldItalic"];
+//}
 @end
