@@ -65,7 +65,7 @@ static const int GRID_ROWS = 9;
 
 - (NSSet *)createInitialCookies {
     
-    self.movesLeft = 20;
+    self.movesLeft = 30;
     self.score = 0;
     
     NSMutableSet *set = [NSMutableSet set];
@@ -317,7 +317,7 @@ static const int GRID_ROWS = 9;
 
 - (void)calculateScores:(NSSet *)chains {
     for (Chain *chain in chains) {
-        chain.score = 30 * ([chain.cookies count] - 2) * self.comboMultiplier;
+        chain.score = 60 * ([chain.cookies count] - 2) * self.comboMultiplier;
         self.comboMultiplier++;
     }
 }
@@ -544,12 +544,12 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
     if (self.states == FALSE) {
-        if (self.score >= 100) {
-            UIImage *uiImage = [UIImage imageNamed:@"image/LevelComplete.png"];
+        if (self.score >= 4000) {
+            //UIImage *uiImage = [UIImage imageNamed:@"image/LevelComplete.png"];
             //[self showGameOver];
-            //[[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
+            [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
             
-        } else if (self.movesLeft == 0) {
+        } else if (self.movesLeft <= 0) {
             //        self.gameOverPanel.image = [UIImage imageNamed:@"GameOver"];
             //        [self showGameOver];
             [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
