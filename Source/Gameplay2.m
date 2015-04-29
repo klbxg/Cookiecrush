@@ -36,7 +36,7 @@ static __weak Gameplay2* _currentGameScene;
 {
     _grid1.states = TRUE;
     _currentGameScene = self;
-    secs = 10;
+    secs = 180;
     [_grid1 set_scoreLabel1:__timescore];
     [self schedule:@selector(updateTimeDisplay:) interval:1];
     _pauselayer.gameplay2 = self;

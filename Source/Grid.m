@@ -69,7 +69,7 @@ static const int GRID_ROWS = 9;
 
 - (NSSet *)createInitialCookies {
     
-    self.movesLeft = 5;
+    self.movesLeft = 30;
     self.score = 0;
     
     NSMutableSet *set = [NSMutableSet set];
@@ -548,7 +548,7 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
     if (self.states == FALSE) {
-        if (self.score >= 3000) {
+        if (self.score >= 5000) {
             popup = [CCBReader load:@"Congrats" owner:self.parent];
             popup.anchorPoint = ccp(0.5,0.5);
             popup.positionType = CCPositionTypeNormalized;
@@ -720,13 +720,5 @@ static const int GRID_ROWS = 9;
     
     return _cookies[column][row];
 }
-//- (void)preloadResources {
-//    self.swapSound = [CCAction playSoundFileNamed:@"Chomp.wav" waitForCompletion:NO];
-//    self.invalidSwapSound = [CCAction playSoundFileNamed:@"Error.wav" waitForCompletion:NO];
-//    self.matchSound = [CCAction playSoundFileNamed:@"Ka-Ching.wav" waitForCompletion:NO];
-//    self.fallingCookieSound = [CCAction playSoundFileNamed:@"Scrape.wav" waitForCompletion:NO];
-//    self.addCookieSound = [CCAction playSoundFileNamed:@"Drip.wav" waitForCompletion:NO];
-//    
-//    //[CCLabelNode labelNodeWithFontNamed:@"GillSans-BoldItalic"];
-//}
+
 @end
