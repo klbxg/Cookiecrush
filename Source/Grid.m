@@ -425,7 +425,7 @@ static const int GRID_ROWS = 9;
 - (void)animateMatchedCookies:(NSSet *)chains completion:(dispatch_block_t)completion {
     
     for (Chain *chain in chains) {
-        //[self animateScoreForChain:chain];
+        [self animateScoreForChain:chain];
         for (Creature *cookie in chain.cookies) {
             
             if (cookie != nil) {
@@ -489,6 +489,38 @@ static const int GRID_ROWS = 9;
                                          [CCActionCallBlock actionWithBlock:completion]
                                          ]]];
 }
+- (void)animateScoreForChain:(Chain *)chain {
+    Creature *firstCookie = [chain.cookies firstObject];
+    Creature *lastCookie = [chain.cookies lastObject];
+    CGPoint centerPosition = CGPointMake(
+                                         (firstCookie.position.x + lastCookie.position.x)/2,
+                                         (firstCookie.position.y + lastCookie.position.y)/2 - 8);
+    CCLabelTTF *scoreLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%lu", (long)chain.score] fontName:@"GillSans-Bold" fontSize:16];
+    scoreLabel.position = centerPosition;
+    scoreLabel.fontColor = [[CCColor whiteColor] colorWithAlphaComponent:0.85];
+    scoreLabel.anchorPoint = ccp(0.5, 0.5);
+    scoreLabel.visible = NO;
+    
+    [self addChild:scoreLabel z:200];
+    
+    id delay = [CCActionDelay actionWithDuration:0.4];
+    id show = [CCActionShow action];
+    id enlarge = [CCActionScaleTo actionWithDuration:0.2 scale:2.5];
+    id shrink = [CCActionScaleTo actionWithDuration:0.3 scale:1.0];
+    id remove = [CCActionRemove action];
+    
+    if (chain.score > 100) {
+        [scoreLabel runAction:[CCActionSequence actions:delay, show,
+                          enlarge, shrink, enlarge, shrink,
+                          remove, nil]];
+    } else {
+        [scoreLabel runAction:[CCActionSequence actions:delay, show,
+                          enlarge, shrink,
+                          remove, nil]];
+    }
+
+}
+
 - (void)animateNewCookies:(NSArray *)columns completion:(dispatch_block_t)completion {
 
     __block NSTimeInterval longestDuration = 0;
