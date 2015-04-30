@@ -18,6 +18,7 @@
 		6F3032A51AF021F400B17CE3 /* iPhone@2d.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F3032A21AF021F400B17CE3 /* iPhone@2d.png */; };
 		6F3F72411ADD5FCB00BFF5CD /* Swap.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72401ADD5FCB00BFF5CD /* Swap.m */; };
 		6F3F72441ADD94A300BFF5CD /* Chain.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F3F72431ADD94A300BFF5CD /* Chain.m */; };
+		6F592A931AF1DE3000AB6B15 /* GameGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F592A921AF1DE3000AB6B15 /* GameGlobals.m */; };
 		6F6AC6151ADC28F5000B5690 /* Creature.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6AC6141ADC28F5000B5690 /* Creature.m */; };
 		6F6AC61B1ADC2946000B5690 /* Grid.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F6AC61A1ADC2946000B5690 /* Grid.m */; };
 		6FB9E2A91ADB4F4C0058DC4D /* Gameplay.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FB9E2A81ADB4F4C0058DC4D /* Gameplay.m */; };
@@ -172,6 +173,8 @@
 		6F3F72401ADD5FCB00BFF5CD /* Swap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Swap.m; path = Source/Swap.m; sourceTree = "<group>"; wrapsLines = 0; };
 		6F3F72421ADD94A300BFF5CD /* Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chain.h; path = Source/Chain.h; sourceTree = "<group>"; };
 		6F3F72431ADD94A300BFF5CD /* Chain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chain.m; path = Source/Chain.m; sourceTree = "<group>"; };
+		6F592A911AF1DE3000AB6B15 /* GameGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameGlobals.h; path = Source/GameGlobals.h; sourceTree = "<group>"; };
+		6F592A921AF1DE3000AB6B15 /* GameGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameGlobals.m; path = Source/GameGlobals.m; sourceTree = "<group>"; };
 		6F6AC6131ADC28F5000B5690 /* Creature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Creature.h; path = Source/Creature.h; sourceTree = "<group>"; };
 		6F6AC6141ADC28F5000B5690 /* Creature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Creature.m; path = Source/Creature.m; sourceTree = "<group>"; };
 		6F6AC6191ADC2946000B5690 /* Grid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Grid.h; path = Source/Grid.h; sourceTree = "<group>"; };
@@ -465,6 +468,8 @@
 				6F3F72401ADD5FCB00BFF5CD /* Swap.m */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
+				6F592A911AF1DE3000AB6B15 /* GameGlobals.h */,
+				6F592A921AF1DE3000AB6B15 /* GameGlobals.m */,
 				6FB9E2A71ADB4F4C0058DC4D /* Gameplay.h */,
 				6FB9E2A81ADB4F4C0058DC4D /* Gameplay.m */,
 				6FB9E2AA1ADB59DE0058DC4D /* Gameplay2.h */,
@@ -851,6 +856,7 @@
 				6F6AC61B1ADC2946000B5690 /* Grid.m in Sources */,
 				6FB9E2A91ADB4F4C0058DC4D /* Gameplay.m in Sources */,
 				6F3F72441ADD94A300BFF5CD /* Chain.m in Sources */,
+				6F592A931AF1DE3000AB6B15 /* GameGlobals.m in Sources */,
 				6FB9E2AC1ADB59DE0058DC4D /* Gameplay2.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 			);

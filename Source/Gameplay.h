@@ -16,5 +16,5 @@
 @property(assign, nonatomic) CCLabelTTF *_targetLabel;
 @property(assign, nonatomic) CCLabelTTF *_moveLabel;
 @property(assign, nonatomic) CCLabelTTF *_scoreLabel;
-
+@property(assign, nonatomic) CCLabelTTF *_hint;
 @end

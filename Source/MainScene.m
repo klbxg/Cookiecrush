@@ -1,7 +1,16 @@
 #import "MainScene.h"
-
+#import "GameGlobals.h"
 
 @implementation MainScene
+
+- (void) didLoadFromCCB
+{
+    [OALSimpleAudio sharedInstance];
+    GameGlobals* g = [GameGlobals globals];
+    
+    _moveHighScore.string = [NSString stringWithFormat:@"%d",g.highScore1];
+    _timeHighScore.string = [NSString stringWithFormat:@"%d",g.highScore2];
+}
 
 - (void)move {
     [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];

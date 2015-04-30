@@ -11,6 +11,7 @@
 #import "Swap.h"
 #import "Chain.h"
 #import "Gameplay2.h"
+#import "GameGlobals.h"
 
 static const int GRID_COLUMNS = 9;
 static const int GRID_ROWS = 9;
@@ -71,6 +72,7 @@ static const int GRID_ROWS = 9;
     
     self.movesLeft = 30;
     self.score = 0;
+    self.comboMultiplier = 1;
     
     NSMutableSet *set = [NSMutableSet set];
     
@@ -321,7 +323,7 @@ static const int GRID_ROWS = 9;
 
 - (void)calculateScores:(NSSet *)chains {
     for (Chain *chain in chains) {
-        chain.score = 60 * ([chain.cookies count] - 2) * self.comboMultiplier;
+        chain.score = 40 * ([chain.cookies count] - 2) * self.comboMultiplier;
         self.comboMultiplier++;
     }
 }
@@ -580,7 +582,19 @@ static const int GRID_ROWS = 9;
     CCLOG(@"moveleft %lu", self.movesLeft);
     [self updateLabels];
     if (self.states == FALSE) {
-        if (self.score >= 5000) {
+//        if (self.score >= 5000) {
+//            popup = [CCBReader load:@"Congrats" owner:self.parent];
+//            popup.anchorPoint = ccp(0.5,0.5);
+//            popup.positionType = CCPositionTypeNormalized;
+//            popup.position = ccp(0.5,0.5);
+//            [self.parent addChild:popup];
+//            self.userInteractionEnabled = NO;
+//            self.parent.userInteractionEnabled = NO;
+//            self.paused = YES;
+//            self.parent.paused = YES;
+//            
+//        } else
+        if (self.movesLeft <= 0) {
             popup = [CCBReader load:@"Congrats" owner:self.parent];
             popup.anchorPoint = ccp(0.5,0.5);
             popup.positionType = CCPositionTypeNormalized;
@@ -588,19 +602,11 @@ static const int GRID_ROWS = 9;
             [self.parent addChild:popup];
             self.userInteractionEnabled = NO;
             self.parent.userInteractionEnabled = NO;
-            self.paused = YES;
+            //self.paused = YES;
             self.parent.paused = YES;
+            [GameGlobals globals].lastScore1 = self.score;
             
-        } else if (self.movesLeft <= 0) {
-            popup = [CCBReader load:@"Gameover" owner:self.parent];
-            popup.anchorPoint = ccp(0.5,0.5);
-            popup.positionType = CCPositionTypeNormalized;
-            popup.position = ccp(0.5,0.5);
-            [self.parent addChild:popup];
-            self.userInteractionEnabled = NO;
-            self.parent.userInteractionEnabled = NO;
-            self.paused = YES;
-            self.parent.paused = YES;
+            [[GameGlobals globals] store];
         }
 
     }

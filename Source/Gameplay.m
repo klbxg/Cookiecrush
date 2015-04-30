@@ -25,16 +25,6 @@
     [_grid stopSound];
     [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
 }
-//- (void) menupage {
-//    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
-//    [_grid stopSound];
-//    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
-//}
-//- (void) menu1 {
-//    [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
-//    [_grid stopSound];
-//    [[CCDirector sharedDirector] replaceScene:[CCBReader loadAsScene:@"MainScene"]];
-//}
 - (void) replay {
     [[OALSimpleAudio sharedInstance] playEffect:@"Sounds/click.wav"];
     [_grid stopSound];
@@ -45,7 +35,7 @@
 {
     FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
     // this should link to FB page for your app or AppStore link if published
-    content.contentURL = [NSURL URLWithString:@"https://enclosegame.com/"];
+    content.contentURL = [NSURL URLWithString:@"https://hunt.makeschool.com/posts/133"];
     // URL of image to be displayed alongside post
     //content.imageURL = [NSURL URLWithString:@"https://git.makeschool.com/MakeSchool-Tutorials/News/f744d331484d043a373ee2a33d63626c352255d4//663032db-cf16-441b-9103-c518947c70e1/cover_photo.jpeg"];
     // title of post
