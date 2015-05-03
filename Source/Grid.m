@@ -428,8 +428,9 @@ static const int GRID_ROWS = 9;
     
     for (Chain *chain in chains) {
         [self animateScoreForChain:chain];
+        int count = 0;
         for (Creature *cookie in chain.cookies) {
-            
+            count++;
             if (cookie != nil) {
                 CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"removeeffect"];
                 explosion.position = cookie.position;
@@ -441,6 +442,14 @@ static const int GRID_ROWS = 9;
                 [cookie.sprite removeFromParent];
                 cookie.sprite = nil;
             }
+        }
+        if (count >=4) {
+            CCParticleSystem *explosion = (CCParticleSystem *)[CCBReader load:@"comboeffect"];
+            explosion.anchorPoint = ccp(0.5, 0.5);
+            explosion.positionType = CCPositionTypeNormalized;
+            explosion.position = ccp(0.5, 0.5);
+            [self addChild:explosion];
+            explosion.autoRemoveOnFinish = YES;
         }
     }
     
