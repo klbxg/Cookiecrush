@@ -428,6 +428,9 @@ static const int GRID_ROWS = 9;
     
     for (Chain *chain in chains) {
         [self animateScoreForChain:chain];
+        if (self.comboMultiplier > 2) {
+            [self animateCombo];
+        }
         int count = 0;
         for (Creature *cookie in chain.cookies) {
             count++;
@@ -647,7 +650,6 @@ static const int GRID_ROWS = 9;
             CCLOG(@"self chain %lu, %lu", self.score, chain.score);
         };
         [self updateLabels];
-        
         NSArray *columns = [self fillHoles];
         NSLog(@"falling %@", columns);
         [self animateFallingCookies:columns completion:^{
@@ -660,6 +662,30 @@ static const int GRID_ROWS = 9;
             }];
         }];
     }];
+}
+- (void) animateCombo {
+    CCLabelTTF *label = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"COMBO x%zu", self.comboMultiplier - 1]
+                                           fontName:@"GillSans-Bold"
+                                           fontSize:30.0f];
+    label.anchorPoint = ccp(0.5, 0.5);
+    label.positionType = CCPositionTypeNormalized;
+    label.position = ccp(0.5, 0.5);
+    label.fontColor = [[CCColor whiteColor] colorWithAlphaComponent:0.75];
+    
+    label.visible = NO;
+    
+    [self addChild:label z:600];
+    
+    id delay = [CCActionDelay actionWithDuration:0.5];
+    id show = [CCActionShow action];
+    id enlarge = [CCActionScaleTo actionWithDuration:0.4 scale:2.0];
+    id shrink = [CCActionScaleTo actionWithDuration:0.3 scale:1.0];
+    id remove = [CCActionRemove action];
+    
+    [label runAction:[CCActionSequence actions:delay, show,
+                      enlarge, shrink,
+                      remove, nil]];
+
 }
 
 - (void)trySwapHorizontal:(NSInteger)horzDelta vertical:(NSInteger)vertDelta {
